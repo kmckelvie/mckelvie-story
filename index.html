@@ -60,25 +60,9 @@
     </div>
 
     <div class="hero-stats">
-      <div class="flip-counter">
-        <div class="flip-unit">
-          <div class="flip-digits">
-            <span class="flip-digit" id="cY0">0</span><span class="flip-digit" id="cY1">0</span>
-          </div>
-          <div class="flip-label">Years</div>
-        </div>
-        <div class="flip-unit">
-          <div class="flip-digits">
-            <span class="flip-digit" id="cM0">0</span><span class="flip-digit" id="cM1">0</span>
-          </div>
-          <div class="flip-label">Months</div>
-        </div>
-        <div class="flip-unit">
-          <div class="flip-digits">
-            <span class="flip-digit" id="cD0">0</span><span class="flip-digit" id="cD1">0</span>
-          </div>
-          <div class="flip-label">Days</div>
-        </div>
+      <div class="stat">
+        <div class="stat-num" id="dayCounter">577</div>
+        <div class="stat-label">days displaced</div>
       </div>
     </div>
   </div>
@@ -874,35 +858,10 @@
   (function() {
     var start = new Date(2024, 9, 28);
     var today = new Date();
-    var years = today.getFullYear() - start.getFullYear();
-    var months = today.getMonth() - start.getMonth();
-    var days = today.getDate() - start.getDate();
-    if (days < 0) { months--; days += new Date(today.getFullYear(), today.getMonth(), 0).getDate(); }
-    if (months < 0) { years--; months += 12; }
-
-    function setDigits(a, b, val) {
-      var s = String(val).padStart(2, '0');
-      var ea = document.getElementById(a), eb = document.getElementById(b);
-      if (ea) ea.textContent = s[0];
-      if (eb) eb.textContent = s[1];
-    }
-    function animateUnit(a, b, target, delay) {
-      setTimeout(function() {
-        var dur = 1400, t0 = performance.now();
-        function tick(now) {
-          var t = Math.min((now - t0) / dur, 1);
-          var ease = 1 - Math.pow(1 - t, 3);
-          setDigits(a, b, Math.round(ease * target));
-          if (t < 1) requestAnimationFrame(tick);
-          else setDigits(a, b, target);
-        }
-        requestAnimationFrame(tick);
-      }, delay);
-    }
-
-    animateUnit('cY0','cY1', years,  0);
-    animateUnit('cM0','cM1', months, 200);
-    animateUnit('cD0','cD1', days,   400);
+    today.setHours(0,0,0,0);
+    var days = Math.floor((today - start) / 86400000);
+    var el = document.getElementById('dayCounter');
+    if (el) el.textContent = days;
   })();
 </script>
 <script src="script.js"></script>
