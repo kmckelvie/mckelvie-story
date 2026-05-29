@@ -60,17 +60,25 @@
     </div>
 
     <div class="hero-stats">
-      <div class="stat stat-counter">
-        <div class="stat-num" id="counterYears">1</div>
-        <div class="stat-label">years</div>
-      </div>
-      <div class="stat stat-counter">
-        <div class="stat-num" id="counterMonths">7</div>
-        <div class="stat-label">months</div>
-      </div>
-      <div class="stat stat-counter">
-        <div class="stat-num" id="counterDays">1</div>
-        <div class="stat-label">days</div>
+      <div class="flip-counter">
+        <div class="flip-unit">
+          <div class="flip-digits">
+            <span class="flip-digit" id="cY0">0</span><span class="flip-digit" id="cY1">0</span>
+          </div>
+          <div class="flip-label">Years</div>
+        </div>
+        <div class="flip-unit">
+          <div class="flip-digits">
+            <span class="flip-digit" id="cM0">0</span><span class="flip-digit" id="cM1">0</span>
+          </div>
+          <div class="flip-label">Months</div>
+        </div>
+        <div class="flip-unit">
+          <div class="flip-digits">
+            <span class="flip-digit" id="cD0">0</span><span class="flip-digit" id="cD1">0</span>
+          </div>
+          <div class="flip-label">Days</div>
+        </div>
       </div>
     </div>
   </div>
@@ -872,26 +880,29 @@
     if (days < 0) { months--; days += new Date(today.getFullYear(), today.getMonth(), 0).getDate(); }
     if (months < 0) { years--; months += 12; }
 
-    function animateTick(el, target, delay) {
-      if (!el) return;
-      el.textContent = 0;
+    function setDigits(a, b, val) {
+      var s = String(val).padStart(2, '0');
+      var ea = document.getElementById(a), eb = document.getElementById(b);
+      if (ea) ea.textContent = s[0];
+      if (eb) eb.textContent = s[1];
+    }
+    function animateUnit(a, b, target, delay) {
       setTimeout(function() {
-        var duration = 1400;
-        var startTime = performance.now();
+        var dur = 1400, t0 = performance.now();
         function tick(now) {
-          var t = Math.min((now - startTime) / duration, 1);
-          var ease = 1 - Math.pow(1 - t, 3); // ease-out cubic
-          el.textContent = Math.round(ease * target);
+          var t = Math.min((now - t0) / dur, 1);
+          var ease = 1 - Math.pow(1 - t, 3);
+          setDigits(a, b, Math.round(ease * target));
           if (t < 1) requestAnimationFrame(tick);
-          else el.textContent = target;
+          else setDigits(a, b, target);
         }
         requestAnimationFrame(tick);
       }, delay);
     }
 
-    animateTick(document.getElementById('counterYears'),  years,  0);
-    animateTick(document.getElementById('counterMonths'), months, 200);
-    animateTick(document.getElementById('counterDays'),   days,   400);
+    animateUnit('cY0','cY1', years,  0);
+    animateUnit('cM0','cM1', months, 200);
+    animateUnit('cD0','cD1', days,   400);
   })();
 </script>
 <script src="script.js"></script>

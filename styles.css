@@ -209,60 +209,57 @@ img { display: block; max-width: 100%; height: auto; }
 }
 
 .hero-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
   border-top: 1px solid var(--rule);
-  padding-top: 28px;
-}
-.stat {
-  padding-right: 24px;
-  border-right: 1px solid var(--rule);
-  padding-left: 24px;
-}
-.stat:first-child { padding-left: 0; }
-.stat:last-child { border-right: none; }
-.stat-num {
-  font-family: var(--serif);
-  font-size: clamp(36px, 4.5vw, 56px);
-  font-weight: 500;
-  line-height: 1;
-  color: var(--ink);
-  letter-spacing: -0.02em;
-}
-.stat-label {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin-top: 12px;
+  padding-top: 32px;
 }
 
-/* Flip-counter style */
-.stat-counter {
+/* Flip-clock counter */
+.flip-counter {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+}
+.flip-unit {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
-.stat-counter .stat-num {
-  background: var(--ink);
+.flip-digits {
+  display: flex;
+  gap: 5px;
+}
+.flip-digit {
+  width: clamp(52px, 6vw, 72px);
+  height: clamp(70px, 8vw, 96px);
+  background: #1c1c1c;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--sans);
+  font-size: clamp(36px, 4.5vw, 52px);
+  font-weight: 700;
   color: #f0ede8;
-  border-radius: 6px;
-  padding: 0.15em 0.45em;
-  display: inline-block;
-  min-width: 2ch;
-  text-align: center;
-  box-shadow: 0 4px 0 rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.07);
+  box-shadow: 0 6px 0 rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
   position: relative;
   overflow: hidden;
+  letter-spacing: 0;
 }
-.stat-counter .stat-num::after {
+.flip-digit::after {
   content: '';
   position: absolute;
   left: 0; right: 0; top: 50%;
   height: 1px;
-  background: rgba(0,0,0,0.25);
+  background: rgba(0,0,0,0.35);
   pointer-events: none;
+}
+.flip-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
 }
 
 .hero-rule {
