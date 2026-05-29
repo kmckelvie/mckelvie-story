@@ -61,8 +61,16 @@
 
     <div class="hero-stats">
       <div class="stat stat-counter">
-        <div class="stat-num" id="dayCounter">576</div>
-        <div class="stat-label">days displaced</div>
+        <div class="stat-num" id="counterYears">1</div>
+        <div class="stat-label">years</div>
+      </div>
+      <div class="stat stat-counter">
+        <div class="stat-num" id="counterMonths">7</div>
+        <div class="stat-label">months</div>
+      </div>
+      <div class="stat stat-counter">
+        <div class="stat-num" id="counterDays">1</div>
+        <div class="stat-label">days</div>
       </div>
     </div>
   </div>
@@ -856,12 +864,22 @@
 <script>
   // Live displacement counter — Oct 28, 2024
   (function() {
-    var start = new Date('2024-10-28');
+    var start = new Date(2024, 9, 28); // Oct 28, 2024
     var today = new Date();
-    today.setHours(0,0,0,0);
-    var days = Math.floor((today - start) / 86400000);
-    var el = document.getElementById('dayCounter');
-    if (el) el.textContent = days;
+    var years = today.getFullYear() - start.getFullYear();
+    var months = today.getMonth() - start.getMonth();
+    var days = today.getDate() - start.getDate();
+    if (days < 0) {
+      months--;
+      days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+    }
+    if (months < 0) { years--; months += 12; }
+    var y = document.getElementById('counterYears');
+    var m = document.getElementById('counterMonths');
+    var d = document.getElementById('counterDays');
+    if (y) y.textContent = years;
+    if (m) m.textContent = months;
+    if (d) d.textContent = days;
   })();
 </script>
 <script src="script.js"></script>
