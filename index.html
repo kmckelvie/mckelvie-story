@@ -864,22 +864,34 @@
 <script>
   // Live displacement counter — Oct 28, 2024
   (function() {
-    var start = new Date(2024, 9, 28); // Oct 28, 2024
+    var start = new Date(2024, 9, 28);
     var today = new Date();
     var years = today.getFullYear() - start.getFullYear();
     var months = today.getMonth() - start.getMonth();
     var days = today.getDate() - start.getDate();
-    if (days < 0) {
-      months--;
-      days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
-    }
+    if (days < 0) { months--; days += new Date(today.getFullYear(), today.getMonth(), 0).getDate(); }
     if (months < 0) { years--; months += 12; }
-    var y = document.getElementById('counterYears');
-    var m = document.getElementById('counterMonths');
-    var d = document.getElementById('counterDays');
-    if (y) y.textContent = years;
-    if (m) m.textContent = months;
-    if (d) d.textContent = days;
+
+    function animateTick(el, target, delay) {
+      if (!el) return;
+      el.textContent = 0;
+      setTimeout(function() {
+        var duration = 1400;
+        var startTime = performance.now();
+        function tick(now) {
+          var t = Math.min((now - startTime) / duration, 1);
+          var ease = 1 - Math.pow(1 - t, 3); // ease-out cubic
+          el.textContent = Math.round(ease * target);
+          if (t < 1) requestAnimationFrame(tick);
+          else el.textContent = target;
+        }
+        requestAnimationFrame(tick);
+      }, delay);
+    }
+
+    animateTick(document.getElementById('counterYears'),  years,  0);
+    animateTick(document.getElementById('counterMonths'), months, 200);
+    animateTick(document.getElementById('counterDays'),   days,   400);
   })();
 </script>
 <script src="script.js"></script>
