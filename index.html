@@ -61,21 +61,9 @@
     </div>
 
     <div class="hero-stats">
-      <div class="stat">
-        <div class="stat-num">576</div>
+      <div class="stat stat-counter">
+        <div class="stat-num" id="dayCounter">576</div>
         <div class="stat-label">days displaced</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">2</div>
-        <div class="stat-label">young daughters affected</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">1</div>
-        <div class="stat-label">new home, brand-new build</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">0</div>
-        <div class="stat-label">days back home</div>
       </div>
     </div>
   </div>
@@ -93,7 +81,7 @@
 
     <div class="story-grid">
       <article class="prose">
-        <p class="dropcap">We are Kristen and Ross McKelvie. In August 2021, we began dreaming about building a home in Wolf Ranch, Georgetown, Texas. We chose Drees Homes because their quality seemed unmatched and their reputation was stellar. There was no one else we wanted to build with.</p>
+        <p class="dropcap">In August 2021, we began dreaming about building a home in Wolf Ranch, Georgetown, Texas. We chose Drees Homes because their quality seemed unmatched and their reputation was stellar. There was no one else we wanted to build with.</p>
 
         <p>We broke ground on August 18, 2022. We closed on April 26, 2023, with our daughter Londyn just beginning to walk. Our second daughter, Lily, was born in November 2023, right in the middle of our first year in the house. This was our forever home.</p>
 
@@ -967,6 +955,17 @@
   </div>
 </footer>
 
+<script>
+  // Live displacement counter — Oct 28, 2024
+  (function() {
+    var start = new Date('2024-10-28');
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    var days = Math.floor((today - start) / 86400000);
+    var el = document.getElementById('dayCounter');
+    if (el) el.textContent = days;
+  })();
+</script>
 <script src="script.js"></script>
 </body>
 </html>
